@@ -48,13 +48,12 @@ int main(int argc, char *argv[])
 }
 
 
+/* designate matrix tuning */
 void headstock(const char sequ[])
 {
-  unsigned short count, notes, span = strlen(sequ);
-
-  unsigned short pitch[] = { BJ, FN, CN, GN, DN, AN, EN, BN, FK };
-
-  notes = sizeof(pitch) / sizeof(pitch[0]);
+  static unsigned short pitch[] = { BJ, FN, CN, GN, DN, AN, EN, BN, FK };
+  static unsigned short notes = sizeof(pitch) / sizeof(pitch[0]);
+  unsigned short count, span = strlen(sequ);
 
   for (count = 0; count < notes; ++count)
     pegbox(sequ, span, pitch[count]);

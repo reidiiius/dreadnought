@@ -1,16 +1,26 @@
 
-#define BJ 30
-#define FN 15
-#define CN  0
-#define GN 21
-#define DN  6
-#define AN 27
-#define EN 12
-#define BN 33
-#define FK 18
-
 #define MUSKEY 16
-#define CARLEN 64
+#define CARLEN 48
+
+enum chromatic {
+  CN = 0,
+  CK = 3,
+  DJ = 3,
+  DN = 6,
+  DK = 9,
+  EJ = 9,
+  EN = 12,
+  FN = 15,
+  FK = 18,
+  GJ = 18,
+  GN = 21,
+  GK = 24,
+  AJ = 24,
+  AN = 27,
+  AK = 30,
+  BJ = 30,
+  BN = 33
+};
 
 struct digraphs
 {
@@ -103,6 +113,6 @@ struct digraphs databank[] = {
   {"j3k56m4", "vo __ ty xu __ __ __ ux yt __ ov qq "},
   {"k1j56l7", "__ ux yt __ ov qq vo __ ty xu __ __ "},
   {"k2j56l7", "yr __ __ qz vv zq to __ ry wu __ __ "},
-  {"EOF",     "\0"}
+  {"EOF",     {'\0'}}
 };
 
