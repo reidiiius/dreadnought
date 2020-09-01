@@ -10,7 +10,7 @@ void pegbox(const char sequ[], unsigned short span, unsigned short tune);
 
 int main(int argc, char *argv[])
 {
-  unsigned short count, clave = 0;
+  unsigned short count, clave;
   unsigned long epoch = time(NULL);
 
   if (argc > 1) {  
@@ -28,16 +28,20 @@ int main(int argc, char *argv[])
       clave = 0;
     }
   } else {
+    putchar('\n');
     while(! strstr(databank[clave].signat, "EOF"))
     {
-      if (clave % 7 != 0) {
+      if (!clave) {
+         ++clave;
+        continue;
+      } else if (clave % 7 != 0) {
         printf("\t%s", databank[clave].signat);
       } else {
-        putchar('\n');
+        printf("\t%s\n", databank[clave].signat);
       }
       clave++;
     }
-    puts("\n");
+    printf("\t%s\n\n", databank[0].signat);
   }
  
   return 0;
