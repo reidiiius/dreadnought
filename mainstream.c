@@ -7,20 +7,19 @@
 void headstock(const char sequ[]);
 void pegbox(const char sequ[], unsigned short span, unsigned short tune);
 
+
 int main(int argc, char *argv[])
 {
   unsigned short count, clave = 0;
   unsigned long epoch = time(NULL);
 
-  if (argc > 1)
-  {  
+  if (argc > 1) {  
     puts("");
     for (count = 1; count <= argc-1; count++)
     {
       while(! strstr(databank[clave].signat, "EOF"))
       {
-        if (strstr(databank[clave].signat, argv[count]))
-        {
+        if (strstr(databank[clave].signat, argv[count])) {
           printf("\t%s-i%lu\n", databank[clave].signat, epoch);
           headstock(databank[clave].course);
         }
@@ -29,13 +28,21 @@ int main(int argc, char *argv[])
       clave = 0;
     }
   } else {
-    puts("\n  Usage:\n");
-    puts("\tgcc -o fingerboard mainstream.c -Wall\n");
-    puts("\t./fingerboard n0 j236\n");
+    while(! strstr(databank[clave].signat, "EOF"))
+    {
+      if (clave % 7 != 0) {
+        printf("\t%s", databank[clave].signat);
+      } else {
+        putchar('\n');
+      }
+      clave++;
+    }
+    puts("\n");
   }
  
   return 0;
 }
+
 
 void headstock(const char sequ[])
 {
@@ -50,6 +57,7 @@ void headstock(const char sequ[])
 
   putchar('\n');
 }
+
 
 void pegbox(const char sequ[], unsigned short span, unsigned short tune)
 {
