@@ -10,22 +10,24 @@ void pegbox(const char sequ[], unsigned short span, unsigned short tune);
 
 int main(int argc, char *argv[])
 {
-  unsigned short count, clave;
+  unsigned short count, clave, found;
   unsigned long epoch = time(NULL);
 
   if (argc > 1) {  
     puts("");
-    for (count = 1; count <= argc-1; count++)
+    for (count = 1; count <= argc-1; ++count)
     {
       while(! strstr(databank[clave].signat, "EOF"))
       {
         if (strstr(databank[clave].signat, argv[count])) {
           printf("\t%s-i%lu\n", databank[clave].signat, epoch);
           headstock(databank[clave].course);
+          ++found;
         }
-        clave++;
+        ++clave;
       }
-      clave = 0;
+      if (!found) printf("\t%s ?\n\n", argv[count]);
+      clave = found = 0;
     }
   } else {
     putchar('\n');
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
       } else {
         printf("\t%s\n", databank[clave].signat);
       }
-      clave++;
+      ++clave;
     }
     printf("\t%s\n\n", databank[0].signat);
   }
