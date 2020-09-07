@@ -4,45 +4,68 @@
 #include <time.h>
 #include "scordatura.h"
 
+#ifndef MUSKEY
+  #define MUSKEY 16
+#endif
+
+#ifndef CARLEN
+  #define CARLEN 48
+#endif
+
 void headstock(const char sequ[]);
 void pegbox(const char sequ[], unsigned short span, unsigned short tune);
 
 
 int main(int argc, char *argv[])
 {
-  unsigned short count, clave, found;
+  char argot[MUSKEY], clave[MUSKEY];
+  unsigned short count, niter, found;
   unsigned long epoch = time(NULL);
 
   if (argc > 1) {  
     puts("");
     for (count = 1; count <= argc-1; ++count)
     {
-      while(! strstr(databank[clave].signat, "EOF"))
-      {
-        if (strstr(databank[clave].signat, argv[count])) {
-          printf("\t%s-i%lu\n", databank[clave].signat, epoch);
-          headstock(databank[clave].course);
-          ++found;
-        }
-        ++clave;
+      strncpy(argot, argv[count], MUSKEY-1);
+      strcpy(clave, databank[niter].signat);
+
+      if (strlen(argv[count]) > 8) {
+        printf("\t%s ?\n\n", argot);
+        continue;
       }
-      if (!found) printf("\t%s ?\n\n", argv[count]);
-      clave = found = 0;
+
+      while(strncmp(clave, "EOF", 3))
+      {
+        if (!strcmp(clave, argot)) {
+          printf("\t%s-i%lu\n", clave, epoch);
+          headstock(databank[niter].course);
+          ++found;
+          break;
+        }
+
+        strcpy(clave, databank[++niter].signat);
+      }
+
+      if (!found) printf("\t%s ?\n\n", argot);
+
+      niter = found = 0;
     }
   } else {
+    niter = 1;
+    strcpy(clave, databank[niter].signat);
+
     putchar('\n');
-    while(! strstr(databank[clave].signat, "EOF"))
+    while(strncmp(clave, "EOF", 3))
     {
-      if (!clave) {
-         ++clave;
-        continue;
-      } else if (clave % 7 != 0) {
-        printf("\t%s", databank[clave].signat);
+      if (niter % 7 != 0) {
+        printf("\t%s", clave);
       } else {
-        printf("\t%s\n", databank[clave].signat);
+        printf("\t%s\n", clave);
       }
-      ++clave;
+
+      strcpy(clave, databank[++niter].signat);
     }
+
     printf("\t%s\n\n", databank[0].signat);
   }
  
