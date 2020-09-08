@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     puts("");
     for (count = 1; count <= argc-1; ++count)
     {
+      niter = found = 0;
       strncpy(argot, argv[count], MUSKEY-1);
       strcpy(clave, databank[niter].signat);
 
@@ -47,8 +48,6 @@ int main(int argc, char *argv[])
       }
 
       if (!found) printf("\t%s ?\n\n", argot);
-
-      niter = found = 0;
     }
   } else {
     niter = 1;
