@@ -13,7 +13,7 @@
 #endif
 
 void headstock(const char *sequ);
-void pegbox(const char *sequ, unsigned short span, unsigned short tune);
+char *pegbox(const char *sequ, char *yarn, unsigned short harp);
 
 
 int main(int argc, char *argv[])
@@ -75,24 +75,26 @@ int main(int argc, char *argv[])
 /* designate tuning */
 void headstock(const char *sequ)
 {
-  static unsigned short pitch[] = { BJ, FN, CN, GN, DN, AN, EN, BN, FK };
-  static unsigned short notes = sizeof(pitch) / sizeof(pitch[0]);
-  unsigned short count, span = strlen(sequ);
+  static unsigned short tuned[] = { BJ, FN, CN, GN, DN, AN, EN, BN, FK };
+  static unsigned short notes = sizeof(tuned) / sizeof(tuned[0]);
+  unsigned short count;
+  char yarn[CARLEN];
 
   for (count = 0; count < notes; ++count)
-    pegbox(sequ, span, pitch[count]);
+    puts(pegbox(sequ, yarn, tuned[count]));
 
   putchar('\n');
 }
 
 
-void pegbox(const char *sequ, unsigned short span, unsigned short tune)
+char *pegbox(const char *sequ, char *yarn, unsigned short harp)
 {
-  char course[CARLEN];
+  char cord[CARLEN];
 
-  strcpy(course, sequ + tune);
-  strncat(course, sequ, tune);
+  strcpy(cord, sequ + harp);
+  strncat(cord, sequ, harp);
 
-  printf("\t%s\n", course);
+  sprintf(yarn, "\t%s", cord);
+  return yarn;
 }
 
