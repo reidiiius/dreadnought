@@ -5,15 +5,15 @@
 #include "scordatura.h"
 
 #ifndef MUSKEY
-  #define MUSKEY 16
+  #define MUSKEY 24
 #endif
 
 #ifndef CARLEN
-  #define CARLEN 48
+  #define CARLEN 80
 #endif
 
-void headstock(const char sequ[]);
-void pegbox(const char sequ[], unsigned short span, unsigned short tune);
+void headstock(const char *sequ);
+void pegbox(const char *sequ, unsigned short span, unsigned short tune);
 
 
 int main(int argc, char *argv[])
@@ -30,12 +30,12 @@ int main(int argc, char *argv[])
       strncpy(argot, argv[count], MUSKEY-1);
       strcpy(clave, databank[niter].signat);
 
-      if (strlen(argv[count]) > 8) {
+      if (strlen(argv[count]) > MUSKEY/2) {
         printf("\t%s ?\n\n", argot);
         continue;
       }
 
-      while(strncmp(clave, "EOF", 3))
+      while(strncmp(clave, "ETB", 3))
       {
         if (!strcmp(clave, argot)) {
           printf("\t%s-i%lu\n", clave, epoch);
@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     strcpy(clave, databank[niter].signat);
 
     putchar('\n');
-    while(strncmp(clave, "EOF", 3))
+    while(strncmp(clave, "ETB", 3))
     {
       if (niter % 7 != 0) {
         printf("\t%s", clave);
@@ -72,8 +72,8 @@ int main(int argc, char *argv[])
 }
 
 
-/* designate matrix tuning */
-void headstock(const char sequ[])
+/* designate tuning */
+void headstock(const char *sequ)
 {
   static unsigned short pitch[] = { BJ, FN, CN, GN, DN, AN, EN, BN, FK };
   static unsigned short notes = sizeof(pitch) / sizeof(pitch[0]);
@@ -86,7 +86,7 @@ void headstock(const char sequ[])
 }
 
 
-void pegbox(const char sequ[], unsigned short span, unsigned short tune)
+void pegbox(const char *sequ, unsigned short span, unsigned short tune)
 {
   char course[CARLEN];
 
