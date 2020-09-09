@@ -13,24 +13,24 @@
 #endif
 
 void headstock(const char *sequ);
-char *pegbox(const char *sequ, char *yarn, unsigned short harp);
+char *pegbox(const char *cart, char *yarn, unsigned short harp);
 
 
 int main(int argc, char *argv[])
 {
   char argot[MUSKEY], clave[MUSKEY];
-  unsigned short count, niter, found;
+  unsigned short cargo, niter, found;
   unsigned long epoch = time(NULL);
 
   if (argc > 1) {  
     puts("");
-    for (count = 1; count <= argc-1; ++count)
+    for (cargo = 1; cargo <= argc-1; ++cargo)
     {
       niter = found = 0;
-      strncpy(argot, argv[count], MUSKEY-1);
+      strncpy(argot, argv[cargo], MUSKEY-1);
       strcpy(clave, databank[niter].signat);
 
-      if (strlen(argv[count]) > MUSKEY/2) {
+      if (strlen(argv[cargo]) > MUSKEY/2) {
         printf("\t%s ?\n\n", argot);
         continue;
       }
@@ -77,22 +77,22 @@ void headstock(const char *sequ)
 {
   static unsigned short tuned[] = { BJ, FN, CN, GN, DN, AN, EN, BN, FK };
   static unsigned short notes = sizeof(tuned) / sizeof(tuned[0]);
-  unsigned short count;
-  char yarn[CARLEN];
+  unsigned short pitch;
+  char wire[CARLEN];
 
-  for (count = 0; count < notes; ++count)
-    puts(pegbox(sequ, yarn, tuned[count]));
+  for (pitch = 0; pitch < notes; ++pitch)
+    puts(pegbox(sequ, wire, tuned[pitch]));
 
   putchar('\n');
 }
 
 
-char *pegbox(const char *sequ, char *yarn, unsigned short harp)
+char *pegbox(const char *cart, char *yarn, unsigned short harp)
 {
   char cord[CARLEN];
 
-  strcpy(cord, sequ + harp);
-  strncat(cord, sequ, harp);
+  strcpy(cord, cart + harp);
+  strncat(cord, cart, harp);
 
   sprintf(yarn, "\t%s", cord);
   return yarn;
