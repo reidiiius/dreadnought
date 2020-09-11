@@ -19,16 +19,17 @@ char *pegbox(const char *cart, char *yarn, unsigned short harp);
 int main(int argc, char *argv[])
 {
   char argot[MUSKEY], clave[MUSKEY];
-  unsigned short cargo, niter, found;
+  unsigned short cargo, found, niter;
   unsigned long epoch = time(NULL);
+  struct digraphs *prop;
+  prop = databank;
 
-  if (argc > 1) {  
-    puts("");
+  if (argc > 1) {
+    putchar('\n');
     for (cargo = 1; cargo <= argc-1; ++cargo)
     {
-      niter = found = 0;
       strncpy(argot, argv[cargo], MUSKEY-1);
-      strcpy(clave, databank[niter].signat);
+      strcpy(clave, prop->signat);
 
       if (strlen(argv[cargo]) > MUSKEY/2) {
         printf("\t%s ?\n\n", argot);
@@ -37,35 +38,39 @@ int main(int argc, char *argv[])
 
       while(strncmp(clave, "ETB", 3))
       {
+        found = 0;
+
         if (!strcmp(clave, argot)) {
           printf("\t%s-i%lu\n", clave, epoch);
-          headstock(databank[niter].course);
+          headstock(prop->course);
           ++found;
           break;
         }
 
-        strcpy(clave, databank[++niter].signat);
+        strcpy(clave, (++prop)->signat);
       }
 
       if (!found) printf("\t%s ?\n\n", argot);
+
+      prop = &databank[0];
     }
   } else {
-    niter = 1;
-    strcpy(clave, databank[niter].signat);
+    niter = 0;
+    strcpy(clave, prop->signat);
 
     putchar('\n');
     while(strncmp(clave, "ETB", 3))
     {
-      if (niter % 7 != 0) {
+      if (++niter % 7 != 0) {
         printf("\t%s", clave);
       } else {
         printf("\t%s\n", clave);
       }
 
-      strcpy(clave, databank[++niter].signat);
+      strcpy(clave, (++prop)->signat);
     }
 
-    printf("\t%s\n\n", databank[0].signat);
+    putchar('\n');
   }
  
   return 0;
