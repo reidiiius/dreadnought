@@ -18,25 +18,30 @@ char *pegbox(const char *cart, char *yarn, unsigned short harp);
 
 int main(int argc, char *argv[])
 {
-  char argot[MUSKEY], clave[MUSKEY];
-  unsigned short cargo, found, niter;
+  char clave[MUSKEY];
+  unsigned short cargo, niter;
   unsigned long epoch = time(NULL);
   struct digraphs *prop;
   prop = databank;
 
   if (argc > 1) {
-    putchar('\n');
-    for (cargo = 1; cargo <= argc-1; ++cargo)
-    {
-      strncpy(argot, argv[cargo], MUSKEY-1);
-      strcpy(clave, prop->signat);
+    char argot[MUSKEY];
+    unsigned short found;
 
-      if (strlen(argv[cargo]) > MUSKEY/2) {
+    putchar('\n');
+    for (niter = 1; niter <= argc-1; ++niter)
+    {
+      cargo = strlen(argv[niter]);
+      strncpy(argot, argv[niter], MUSKEY-1);
+
+      if (cargo < 2 || cargo > MUSKEY/2) {
         printf("\t%s ?\n\n", argot);
         continue;
+      } else {
+        strcpy(clave, prop->signat);
       }
 
-      while(strncmp(clave, "ETB", 3))
+      while(strncmp(clave, "ETB", cargo))
       {
         found = 0;
 
@@ -57,9 +62,10 @@ int main(int argc, char *argv[])
   } else {
     niter = 0;
     strcpy(clave, prop->signat);
+    cargo = strlen(clave);
 
     putchar('\n');
-    while(strncmp(clave, "ETB", 3))
+    while(strncmp(clave, "ETB", cargo))
     {
       if (++niter % 7 != 0) {
         printf("\t%s", clave);
@@ -68,6 +74,7 @@ int main(int argc, char *argv[])
       }
 
       strcpy(clave, (++prop)->signat);
+      cargo = strlen(clave);
     }
 
     putchar('\n');
