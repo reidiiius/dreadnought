@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
       cargo = strlen(argv[niter]);
       strncpy(argot, argv[niter], MUSKEY-1);
 
-      if (cargo < 2 || cargo > MUSKEY/2) {
+      if (cargo > 1 && cargo < MUSKEY/2) {
+        strcpy(clave, prop->signat);
+      } else {
         printf("\t%s ?\n\n", argot);
         continue;
-      } else {
-        strcpy(clave, prop->signat);
       }
 
       while(strncmp(clave, "ETB", cargo))
