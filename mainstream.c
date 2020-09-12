@@ -31,8 +31,9 @@ int main(int argc, char *argv[])
     putchar('\n');
     for (niter = 1; niter <= argc-1; ++niter)
     {
-      cargo = strlen(argv[niter]);
       strncpy(argot, argv[niter], MUSKEY-1);
+      argot[MUSKEY-1] = '\0';
+      cargo = strlen(argot);
 
       if (cargo > 1 && cargo < MUSKEY/2) {
         strcpy(clave, prop->signat);
